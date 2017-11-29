@@ -23,6 +23,32 @@ function Person(name,premane)
 }
 Person.prototype.constructor = Object.create(Person);
 
+function listPerson(cap){
+  var content = [];
+  
+  var capacity  = (Number.isInteger(cap) && cap > 0)? cap : 5;//Comprueba que el parametro pasado sea un numero entero, si no lo es le asigna un tamaño fijo
+  Object.defineProperty(this,"capacity",{ get: function (){ return capacity } });
+  
+  var size = (function(){
+    var i = 0;
+    var EndCont = false;
+    while (i < capacity && !EndCont){
+      if(!(content[i] instanceof Person)){
+        EndCont = true;
+      }else{// Cuidadin....
+        i++;
+      }
+    }
+    return i;
+  })();
+  this.Add = function(obj){
+    if(obj instanceof Person){
+      content.push(obj);
+      return size;
+    }
+  }
+}
+
 function CustomError(codeErr)
 /*Constructor de mensajes de error con objetos. Requiere un codigo para designar el nombre y mensaje*/
 {
@@ -30,42 +56,36 @@ function CustomError(codeErr)
     case 0:
     this.name = "Error No.1: ";
     this.message = "List is Full.";
-
       break;
 
     case 1:
     this.name = "Error No.2: ";
     this.message = "List is Empty.";
-
       break;
 
     case 2:
     this.name = "Error No.3: ";
     this.message = "This Element is not a Object Person.";
-
       break;
 
     case 3:
     this.name = "Error No.4: ";
     this.message = "This Element not exist in the list.";
-
       break;
 
     case 4:
     this.name = "Error No.5: ";
     this.message = "This Element alredy exists in the list.";
-
       break;
 
     case 5:
     this.name = "Error No.6: ";
     this.message = "Not implemented";
-
       break;
+
     case 6:
     this.name = "Error No.7: ";
     this.message = "Not Implemented";
-
     break;
 
     default:
@@ -90,6 +110,10 @@ function test(){
   console.log("Name: " + p1.name + ". Surname: " + p1.surname);
   console.log("Full name of person: " + p1.FullName());
   console.log("---------- End testing person objects ----------");
+  console.log("");
+  console.log("---------- Testing listPerson objects ----------");
+
+  console.log("---------- End testing listPerson objects ----------");
 
 }
 test();
