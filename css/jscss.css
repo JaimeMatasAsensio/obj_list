@@ -22,23 +22,24 @@ header h1{
     font-weight: bold;
     font-size: 2.5rem;
     text-shadow: 3px 3px rgb(206, 211, 207)
-    
+
 }
 header h2{
 	text-align: center;
     font-weight: bold;
     font-size: 1.6rem;
-    
+
 }
 main{
 	background-image: url("../imagenes/js.png");
 	background-repeat: no-repeat;
 	background-attachment: fixed;
     background-position: 5px 150px;
-    background-size: 180px auto;	
+    background-size: 180px auto;
 }
 div.apartado{
-    width: 80%;
+    max-width: 1500px;
+    min-width: 500px;
     margin: 0 auto;
 	background-color: rgba(88, 233, 126, 0.2);
 }
@@ -77,7 +78,7 @@ footer p{
 	text-align: center;
     font-weight: bold;
     margin-top: 10px;
-    
+
 }
 footer p:last-child{
     margin-bottom: 20px;
