@@ -38,8 +38,13 @@ function CustomError(codeErr)
       break;
 
     case 6:
-    this.name = "Error No.7: ";
-    this.message = "Not Implemented";
+    this.name = "ErrorIndexOutOfList: ";
+    this.message = "Index out of the list capacity";
+    break;
+
+    case 7:
+    this.name = "ErrorIndexOutOfList: ";
+    this.message = "Index out of the list capacity";
     break;
 
     default:
@@ -81,9 +86,10 @@ Person.prototype.constructor = Object.create(Person);
 function listPerson(cap)
 /*Constructor de objetos listPerson */
 {
-  if(!(this instanceof listPerson)) throw new CustomError(5);
+  if(!(this instanceof listPerson)) throw new CustomError(5);//Este if evita llamadas al constructor sin el operador new
+
   //----------------- "Propiedades" privadas
- 
+  var that = this;
   var content = [];
   var capacity = ((Number.isInteger(cap)) && (cap > 0))? cap : 5 ;
   var size = (function(){
@@ -95,73 +101,60 @@ function listPerson(cap)
   });
 
 //----------------- Metodos Privados o de un uso
-  
+
   (function (){
     for (var i = 0; i < capacity; i++) {
       content[i] = new Object;
     }
   })(); // Inicializa el Objeto listPerson
 
-  function place(){
-    var i = 0;
-    var placed = false;
-    while(i < capacity-1 && !placed ){
-      if(!(content[i] instanceof Person ) && (content[i+1] instanceof Person)){
-        content[i] = content[i+1];
-        content[i+1] = new Object; 
-      }
-      i++;
-      if(!(content[i] instanceof Person ) && !(content[i+1] instanceof Person)){
-        placed = true;
-      }
-    }
-  }
-  
 //----------------- Metodos publicos
 
-this.isEmpty = function ()
-/*Metodo publico para indicar si la lista esta vacia*/
-{ 
-  if((content[0] instanceof Person)){
-    return false;
-  }else{
-    return true;
-  }
-}
-
-this.isfull = function()
-/*Metodopublico para indicar si la lista esta llena*/
-{ 
-  if((content[capacity - 1] instanceof Person)){
-    return true
-  }else{
-    return false;
-  }
-}
-
-/*Metodo publico para obtener la capacidad de la lista*/
-Object.defineProperty(this,"capacity",{ get: function() { return capacity } } );
-
-/*Metodo publico para iterar los elementos de la lista con contenido*/
-Object.defineProperty(this, "items", {
-  get: function(){
-    var nextIndex = 0;
-    return{
-      next: function(){
-        return nextIndex < size() ? {value: content[nextIndex++], done:false}: {done: true};
-      }
+  this.isEmpty = function ()
+  /*Metodo publico para indicar si la lista esta vacia*/
+  {
+    if((content[0] instanceof Person)){
+      return false;
+    }else{
+      return true;
     }
   }
-});
 
-/*Metodo publico para mostrar el tamaño de la lista, numero de elementos*/
-Object.defineProperty(this,"size",{ get: function() {return size} });
-
-this.clear = function (){
-  for (var i = 0; i < capacity; i++) {
-    content[i] = new Object;
+  this.isfull = function()
+  /*Metodopublico para indicar si la lista esta llena*/
+  {
+    if((content[capacity - 1] instanceof Person)){
+      return true
+    }else{
+      return false;
+    }
   }
-};
+
+  /*Metodo publico para obtener la capacidad de la lista*/
+  Object.defineProperty(this,"capacity",{ get: function() { return capacity } } );
+
+  /*Metodo publico para iterar los elementos de la lista con contenido*/
+  Object.defineProperty(this, "items", {
+    get: function(){
+      var nextIndex = 0;
+      return{
+        next: function(){
+          return nextIndex < capacity ? {value: content[nextIndex++], done:false}: {done: true};
+        }
+      }
+    }
+  });
+
+  /*Metodo publico para mostrar el tamaño de la lista, numero de elementos*/
+  Object.defineProperty(this,"size",{ get: function() {return size} });
+
+  this.clear = function ()
+  /*Metodo publico que limpia la lista de elementos*/
+  {
+    for (var i = 0; i < capacity; i++) {
+      content[i] = new Object;
+    }
+  };
 
   this.add = function(obj)
   /*Metodo publico para añadir un objeto de tipo person, devuelve el tamaño actual de la lista*/
@@ -170,7 +163,7 @@ this.clear = function (){
       var index = size();
       if(index < capacity){
         content.splice(index,1,obj);
-        console.log("Object added: " + content[index].FullName());
+        //console.log("Object added: " + content[index].FullName());
       }
       return size();
     }
@@ -184,7 +177,7 @@ this.clear = function (){
       if((content[index]) instanceof Person){
         var aux = content[index];
         content.splice(index,1,obj);
-        console.log("Object added: " + content[index].FullName());
+        //console.log("Object added: " + content[index].FullName());
         var placed = false;
         while(index < capacity && !placed){
           if(!(content[index] instanceof Person)){
@@ -197,24 +190,128 @@ this.clear = function (){
       }else{
         if(!(content[index-1] instanceof Person)){ // si se inserta el elemento en mitad de la lista
         content.splice((index-1),1,obj);//lo desplazara
-        console.log("Object added: " + content[index].FullName());
-      }else{
+        console.log("Object added: " + content[index-1].FullName());
+        }else{
         content.splice((index),1,obj);
         console.log("Object added: " + content[index].FullName());
 
         }
         added = size();
       }
+    }else{
+      throw new CustomError(6);
     }
     return added;
   }
 
-  
+  this.get = function(index){
+    if(index < capacity){
+      return content[index];
+    }else{
+      throw new CustomError(6);
+    }
+  }
+
+  this.toString = function(){
+    var ite = this.items;
+    var item = ite.next();
+    var string = "";
+    while(!item.done){
+      if(item.value instanceof Person){
+        string += item.value.FullName() + "; ";
+      }else{
+        string += "List element 'empty'; ";
+      }
+      item = ite.next();
+    }
+    return string;
+  }
+
+  this.IndexOf = function(obj){
+    if((obj instanceof Person)){
+      var i = 0;
+      var index = -1;
+      while (i < capacity && index == -1) {
+        index = ((content[i].name === obj.name) && (content[i].surname === obj.surname))? i : -1 ;
+        i++;
+      }
+      return index;
+    }else{
+      throw new CustomError(2);
+    }
+  }
+
+  this.LastIndexOf = function(obj){
+    if((obj instanceof Person)){
+      var i = size() -1;
+      var index = -1;
+      while (i > 0 && index == -1) {
+        index = ((content[i].name === obj.name) && (content[i].surname === obj.surname))? i : -1 ;
+        i++;
+      }
+      return index;
+    }else{
+      throw new CustomError(2);
+    }
+  }
+
+  this.FirstElement = function(){
+    if(!that.isEmpty()){
+      return content[0];
+    }else{
+      throw new CustomError(1);
+    }
+  }
+
+  this.LastElement = function(){
+    if(!that.isEmpty()){
+      return content[size()-1];
+    }else{
+      throw new CustomError(1);
+    }
+  }
+
+  this.remove = function(index){
+    if(index < capacity){
+      var removed = content[index];
+      content.splice(index,1,{});
+      for (var i = 0; i < capacity -1; i++) {
+        if(!(content[i] instanceof Person) && (content[i+1] instanceof Person)){
+          var aux = content[i];
+          content[i] = content[i+1];
+          content[i] = aux;
+        }
+      }
+      return removed;
+    }else{
+      throw new CustomError(6);
+    }
+  }
+
+  this.removeElement = function(index, obj){
+    if(index > capacity) throw new CustomError(6);
+    if(!(obj instanceof Person)) throw new CustomError(2);
+    var removed = false;
+      if((content[index].name === obj.name) && (content[index].surname === obj.surname)){
+        content[index] = {};
+        removed = true;
+        for (var i = 0; i < capacity -1; i++) {
+          if(!(content[i] instanceof Person) && (content[i+1] instanceof Person)){
+            content[i] = content[i+1];
+            content[i+1] = {};
+          }
+        }
+      }
+
+    return removed;
+
+  }
+
 }
 
 
 
-//function test(){
+function test(){
   console.log("---------- Testing person objects ----------");
   console.log("Create an object person...");
   var p1 = new Person();
@@ -252,7 +349,33 @@ this.clear = function (){
   console.log("Current list size: " + lista.add(p2));
   console.log("Adding an object person at index 1...")
   console.log("Current list size: " + lista.addAt(p3,1));
-  
+  console.log("Adding an object person at index 4...")
+  console.log("Current list size: " + lista.addAt(p4,4));
+  console.log("Get element at index 3: " + lista.get(3).FullName());
+  try {
+    lista.get(300);
+  } catch (e) {
+    console.log("Try to get a element at index 300...");
+    console.log(e.name + " " + e.message);
+  }
+  console.log(lista.toString());
+  console.log("Index of object p2: " + lista.IndexOf(p2));
+  try {
+    lista.IndexOf("apache");
+  } catch (e) {
+    console.log("trying Search a index of non object person...");
+    console.log(e.name + " " + e.message);
+  }
+  lista.add(p3);
+  console.log("Last index of p3: " + lista.LastIndexOf(p3));
+  var aux = lista.FirstElement();
+  console.log("First Element of the list: " + aux.FullName());
+  aux = lista.LastElement();
+  console.log("Last Element of the list: " + aux.FullName());
+  aux = lista.remove(4);
+  console.log("Remove the element at index 4: " + aux.FullName());
+  console.log("Success removing element at 2 object p2... " + lista.removeElement(2,p2));
+
   console.log("Current list content...");
   //Uso del iterador
   var ite = lista.items;
@@ -261,11 +384,13 @@ this.clear = function (){
     if(item.value instanceof Person){
       console.log("List element: "+item.value.FullName())
     }else{
-      console.log("List element empty ")
+      console.log("List element: empty ")
     }
     item = ite.next();
   }
+  console.log("List capacity: " + lista.capacity);
+  console.log("List size: " + lista.size());
   console.log("---------- End testing listPerson objects ----------");
 
-//}
-//test();
+}
+test();
