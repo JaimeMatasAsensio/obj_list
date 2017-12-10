@@ -68,6 +68,76 @@ margin: 0 auto;
   list-style: square;
   margin-bottom: 5px;
 }
+
+.der, .izq{
+  display: inline-block;
+  width: 50%;
+  box-sizing: border-box;
+  margin: 20px 0;
+  min-height: 50px;
+}
+.der{
+  border-right: 2px solid black;
+}
+.der div{
+  width: 90%;
+  margin: 0 auto;
+}
+.btn{
+  background-color: rgba(88, 233, 126, 1);
+  border:2px solid rgba(88, 233, 126, 1);
+  border-radius: 5px;
+  font-weight: bold;
+  padding: 5px 0;
+  margin: 6px auto;
+  width: 32%;
+  font-size: 0.6rem;
+}
+.borrar{
+  background-color: rgb(172, 77, 53);
+  color: white;
+  border:2px solid rgb(172, 77, 53);
+}
+.btn:hover{
+  cursor: pointer;
+}
+input{
+  border-radius: 5px;
+  padding: 5px 0;
+}
+label{
+  display: block;
+  font-size: 0.8rem;
+  font-weight: bold;
+  margin-top: 5px;
+}
+.ctrlCrear{
+  border-bottom: 2px solid black;
+  padding-bottom: 30px;
+
+}
+.ctrlCrear input{
+  width: 30%;
+  margin-right:3px;
+  text-align: center;
+}
+.ctrlList{
+  margin-top: 20px;
+  padding-top: 10px;
+}
+.ctrlList input[type="text"]{
+  width: 100%;
+}
+.ctrlList input[type="number"]{
+  width: 30%;
+  text-align: center;
+}
+
+.izq .lista p{
+  display:inline-block;
+  width: 100%;
+  text-align: center;
+}
 footer{
     width: 100%;
     padding: 20px;

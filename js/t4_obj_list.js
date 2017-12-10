@@ -8,12 +8,12 @@ function CustomError(codeErr)
 {
   switch (codeErr) {
     case 0:
-    this.name = "ErrorListFull: ";
+    this.name = "ErrorListIsFull: ";
     this.message = "List is Full.";
       break;
 
     case 1:
-    this.name = "ErrorListEmpty: ";
+    this.name = "ErrorListIsEmpty: ";
     this.message = "List is Empty.";
       break;
 
@@ -91,6 +91,7 @@ function listPerson(cap)
   //----------------- "Propiedades" privadas
   var that = this;
   var content = [];
+  var cap = parseInt(cap);
   var capacity = ((Number.isInteger(cap)) && (cap > 0))? cap : 5 ;
   var size = (function(){
     var i=0
@@ -120,7 +121,7 @@ function listPerson(cap)
     }
   }
 
-  this.isfull = function()
+  this.isFull = function()
   /*Metodopublico para indicar si la lista esta llena*/
   {
     if((content[capacity - 1] instanceof Person)){
@@ -159,13 +160,17 @@ function listPerson(cap)
   this.add = function(obj)
   /*Metodo publico para añadir un objeto de tipo person, devuelve el tamaño actual de la lista*/
   {
-    if(!this.isFull && (obj instanceof Person)){
+    if(!(that.isFull()) && (obj instanceof Person)){
       var index = size();
       if(index < capacity){
         content.splice(index,1,obj);
-        //console.log("Object added: " + content[index].FullName());
+        console.log("Object added: " + content[index].FullName());
       }
       return size();
+    }else{
+      console.log("va a saltar el error!");
+      if(that.isFull()) throw new CustomError(0);
+      if(!(obj instanceof Person)) throw new CustomError(2);
     }
   };
 
@@ -173,7 +178,7 @@ function listPerson(cap)
   /*Metodo publico para añadir un objeto de tipo person a la lista indicando la posicion, devuelve el tamaño actual de la lista*/
   {
     var added = -1;
-    if(!this.isFull && (obj instanceof Person) && index < capacity){
+    if(!(this.isFull()) && (obj instanceof Person) && index < capacity){
       if((content[index]) instanceof Person){
         var aux = content[index];
         content.splice(index,1,obj);
@@ -256,7 +261,7 @@ function listPerson(cap)
   }
 
   this.FirstElement = function(){
-    if(!that.isEmpty()){
+    if((!that.isEmpty())){
       return content[0];
     }else{
       throw new CustomError(1);
@@ -264,7 +269,7 @@ function listPerson(cap)
   }
 
   this.LastElement = function(){
-    if(!that.isEmpty()){
+    if(!(that.isEmpty())){
       return content[size()-1];
     }else{
       throw new CustomError(1);
@@ -393,4 +398,4 @@ function test(){
   console.log("---------- End testing listPerson objects ----------");
 
 }
-test();
+//test();

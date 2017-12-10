@@ -1,4 +1,9 @@
 # Tema 4:   Objetos en JavaScript - Lista con Objetos  
+  
+## Version 1.0.1
+Creacion de los elementos HTML  
+Estilo de los elementos HTML con CSS
+Creacion de HTML_Controls.js
 
 ## Version 1.0.0  
 Creacion del constructor para objetos Person  

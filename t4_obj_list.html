@@ -27,8 +27,48 @@
             <li>Debe ser lo mas eficiente que sea posible</li>
           </ul>
           <div class="cont">
+            <div class="der">
+              <div class="ctrlCrear">
+                <h4>Crear Lista</h4>
+                <label for="Capatity">Tamaño de la lista</label>
+                <input type="number" id="Capacity" name="Capacity" min="0" autocomplete="off">
+                <button id="create" name="create" class="btn" onclick="START(document.getElementById('Capacity').value)">CREAR LISTA</button>
+                <button id="clear" name="clear" class="btn borrar">BORRAR LISTA</button>
+              </div>
+              <div class="ctrlList">
+                <h4>Controles de Lista</h4>
+                <label for="Name">Nombre</label>
+                <input type="text" id="Name" name="Name" autocomplete="off">
+                <label for="Surname">Apellido</label>
+                <input type="text" id="Surname" name="Surname" autocomplete="off">
+                <button id="Add" name="Add" class="btn" onclick="ADD(document.getElementById('Name').value,document.getElementById('Surname').value)">AÑADIR</button>
+                <button id="fIndex" name="fIndex" class="btn" onclick="FINDEX(document.getElementById('Name').value,document.getElementById('Surname').value)">PRIMER INDICE</button>
+                <button id="lIndex" name="lIndex" class="btn" onclick="LINDEX(document.getElementById('Name').value,document.getElementById('Surname').value)">ULTIMO INDICE</button>
+                <button id="fElement" name="fElement" class="btn" onclick="FELEMENT()">PRIMER ELEMENTO</button>
+                <button id="lElement" name="lElement" class="btn" onclick="LELEMENT()">ULTIMO ELEMENTO</button>
 
-            
+                <label for="Surname">Indice Añadir</label>
+                <input type="number" id="indiceAdd" name="indiceAdd" autocomplete="off">
+                <button id="addAt" name="addAt" class="btn" onclick="ADDAT(document.getElementById('Name').value, document.getElementById('Surname').value, document.getElementById('indiceAdd').value)">AÑADIR EN INDICE</button>
+                <label for="Surname">Indice Remover</label>
+                <input type="number" id="indiceRem" name="indiceRem" autocomplete="off">
+                <button id="remove" name="remove" class="btn" onclick="REMOVE(document.getElementById('indiceRem').value)">REMOVER</button>
+                <button id="removeElement" name="removeElement" class="btn" onclick="REMOVE(document.getElementById('indiceRem').value, document.getElementById('Name').value, document.getElementById('Surname').value)">QUITAR ELEMENTO</button>
+              </div>
+            </div><div class="izq">
+              <div class="lista">
+                  <p id="contList">
+
+                  </p>
+                  <p id="stringList">
+
+                  </p>
+                  <p id="outputList">
+
+                  </p>
+                </div>
+            </div>
+
           </div>
       </main>
       <footer>
@@ -39,7 +79,6 @@
       </footer>
     </body>
 <!-- El js va aqui -->
-
 <script type="text/javascript" src="js/t4_obj_list.js"></script>
-
+<script type="text/javascript" src="js/t4_htmlControls.js"></script>
 </html>
