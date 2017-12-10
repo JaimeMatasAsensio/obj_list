@@ -211,11 +211,13 @@ function REMOVE(index){
     drawList();
     drawString();
     drawOutput(msg,"green");
+    indexRemInp.value = "";
     nameInp.value = "";
     surnameInp.value = "";
     nameInp.focus();
   } catch (e) {
     msg = e.name+" "+e.message;
+    indexRemInp.value = "";
     nameInp.value = "";
     surnameInp.value = "";
     nameInp.focus();
@@ -235,11 +237,13 @@ function REMOVEELEMT(index,name,surname){
     drawList();
     drawString();
     drawOutput(msg,color);
+    indexRemInp.value = "";
     nameInp.value = "";
     surnameInp.value = "";
     nameInp.focus();
   } catch (e) {
     msg = e.name+" "+e.message;
+    indexRemInp.value = "";
     nameInp.value = "";
     surnameInp.value = "";
     nameInp.focus();

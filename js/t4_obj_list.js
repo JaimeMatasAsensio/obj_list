@@ -179,30 +179,16 @@ function listPerson(cap)
   {
     var added = -1;
     if(!(this.isFull()) && (obj instanceof Person) && index < capacity){
-      if((content[index]) instanceof Person){
         var aux = content[index];
         content.splice(index,1,obj);
-        //console.log("Object added: " + content[index].FullName());
-        var placed = false;
-        while(index < capacity && !placed){
-          if(!(content[index] instanceof Person)){
-            content[index] = aux;
-            placed = true;
-          }
-          index++;
-        }
+        console.log("Object added: " + content[index].FullName() +"at index "+index);
+        content.sort(function(a,b){
+          if(!(a instanceof Person) && (b instanceof Person)) return 1;
+          if((a instanceof Person) && !(b instanceof Person)) return -1;
+          if(!(a instanceof Person) && !(b instanceof Person)) return 0;
+          if((a instanceof Person) && (b instanceof Person)) return 0;
+        });
         added = size();
-      }else{
-        if(!(content[index-1] instanceof Person)){ // si se inserta el elemento en mitad de la lista
-        content.splice((index-1),1,obj);//lo desplazara
-        console.log("Object added: " + content[index-1].FullName());
-        }else{
-        content.splice((index),1,obj);
-        console.log("Object added: " + content[index].FullName());
-
-        }
-        added = size();
-      }
     }else{
       throw new CustomError(6);
     }
@@ -280,13 +266,13 @@ function listPerson(cap)
     if(index < capacity){
       var removed = content[index];
       content.splice(index,1,{});
-      for (var i = 0; i < capacity -1; i++) {
-        if(!(content[i] instanceof Person) && (content[i+1] instanceof Person)){
-          var aux = content[i];
-          content[i] = content[i+1];
-          content[i] = aux;
-        }
-      }
+      content.sort(function(a,b){
+        if(!(a instanceof Person) && (b instanceof Person)) return 1;
+        if((a instanceof Person) && !(b instanceof Person)) return -1;
+        if(!(a instanceof Person) && !(b instanceof Person)) return 0;
+        if((a instanceof Person) && (b instanceof Person)) return 0;
+      });
+      //console.log(that.toString());
       return removed;
     }else{
       throw new CustomError(6);
@@ -300,16 +286,15 @@ function listPerson(cap)
       if((content[index].name === obj.name) && (content[index].surname === obj.surname)){
         content[index] = {};
         removed = true;
-        for (var i = 0; i < capacity -1; i++) {
-          if(!(content[i] instanceof Person) && (content[i+1] instanceof Person)){
-            content[i] = content[i+1];
-            content[i+1] = {};
-          }
-        }
+        content.sort(function(a,b){
+          if(!(a instanceof Person) && (b instanceof Person)) return 1;
+          if((a instanceof Person) && !(b instanceof Person)) return -1;
+          if(!(a instanceof Person) && !(b instanceof Person)) return 0;
+          if((a instanceof Person) && (b instanceof Person)) return 0;
+        });
+        //console.log(that.toString());
       }
-
     return removed;
-
   }
 
 }

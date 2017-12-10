@@ -1,9 +1,13 @@
 # Tema 4:   Objetos en JavaScript - Lista con Objetos  
-  
+
+## Version 1.0.2  
+Ordenacion de los elementos de la lista cuando se remueve elementos en mitad de la misma  
+Ordenacion de los elementos de la lista cuando se añade un elemento en mitad de la misma  
+
 ## Version 1.0.1
 Creacion de los elementos HTML  
 Estilo de los elementos HTML con CSS
-Creacion de HTML_Controls.js
+Creacion de HTML_Controls.jsTema
 
 ## Version 1.0.0  
 Creacion del constructor para objetos Person  
